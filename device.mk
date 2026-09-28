@@ -1,0 +1,45 @@
+# Copyright (C) 2023 Paranoid Android
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Namespace
+PRODUCT_SOONG_NAMESPACES += \
+    vendor/xiaomi/camera
+
+MIUICAMERA_PATH := vendor/xiaomi/camera
+
+# Uses MiuiCamera
+$(call soong_config_set,camera,package_name,com.xiaomi.sessionparams.clientName)
+$(call soong_config_set_bool,camera,uses_miui_camera,true)
+
+# Camera property
+PRODUCT_PACKAGES += \
+    android.hidl.memory.block@1.0 \
+    android.hidl.memory.block@1.0.vendor
+
+# Init scripts
+PRODUCT_COPY_FILES += \
+    $(MIUICAMERA_PATH)/init/init.miuicamera.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.miuicamera.rc
+
+# MIUI Camera Overlay to Surya and Karna
+PRODUCT_PACKAGES += \
+    J20CMiuiCameraOverlay
+
+# Permissions
+PRODUCT_COPY_FILES += \
+    $(MIUICAMERA_PATH)/configs/permissions/miuicamera-permissions.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/default-permissions/miuicamera-permissions.xml \
+    $(MIUICAMERA_PATH)/configs/permissions/miuicamera-hiddenapi-package-whitelist.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/sysconfig/miuicamera-hiddenapi-package-whitelist.xml \
+    $(MIUICAMERA_PATH)/configs/permissions/privapp-permissions-miuicamera.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-miuicamera.xml
+
+# Vendor Proprietary
+$(call inherit-product, vendor/xiaomi/camera/camera-vendor.mk)

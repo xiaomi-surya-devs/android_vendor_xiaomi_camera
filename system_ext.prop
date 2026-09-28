@@ -1,0 +1,7 @@
+ro.com.google.lens.oem_camera_package=com.android.camera
+ro.product.mod_device=surya_global
+camera.disable_zsl_mode=true
+ro.miui.build.region=in
+ro.miui.notch=1
+persist.vendor.camera.privapp.list=com.android.camera
+persist.sys.cam.skip_detach_image=true
